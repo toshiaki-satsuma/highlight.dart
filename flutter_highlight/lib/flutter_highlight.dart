@@ -27,12 +27,20 @@ class HighlightView extends StatelessWidget {
   /// Specify text styles such as font family and font size
   final TextStyle? textStyle;
 
+  /// Border
+  final Border? border;
+
+  /// Border radius
+  final BorderRadius? borderRadius;
+
   HighlightView(
     String input, {
     this.language,
     this.theme = const {},
     this.padding,
     this.textStyle,
+    this.border,
+    this.borderRadius,
     int tabSize = 8, // TODO: https://github.com/flutter/flutter/issues/50087
   }) : source = input.replaceAll('\t', ' ' * tabSize);
 
@@ -88,7 +96,11 @@ class HighlightView extends StatelessWidget {
     }
 
     return Container(
-      color: theme[_rootKey]?.backgroundColor ?? _defaultBackgroundColor,
+      decoration: BoxDecoration(
+        border: border, 
+        borderRadius: borderRadius,
+        color: theme[_rootKey]?.backgroundColor ?? _defaultBackgroundColor,
+      ),
       padding: padding,
       child: RichText(
         text: TextSpan(
