@@ -33,6 +33,9 @@ class HighlightView extends StatelessWidget {
   /// Border radius
   final BorderRadius? borderRadius;
 
+  /// Background color
+  final Color? backgroundColor;
+
   HighlightView(
     String input, {
     this.language,
@@ -41,6 +44,7 @@ class HighlightView extends StatelessWidget {
     this.textStyle,
     this.border,
     this.borderRadius,
+    this.backgroundColor,
     int tabSize = 8, // TODO: https://github.com/flutter/flutter/issues/50087
   }) : source = input.replaceAll('\t', ' ' * tabSize);
 
@@ -56,7 +60,8 @@ class HighlightView extends StatelessWidget {
             : TextSpan(text: node.value, style: theme[node.className!]));
       } else if (node.children != null) {
         List<TextSpan> tmp = [];
-        currentSpans.add(TextSpan(children: tmp, style: theme[node.className!]));
+        currentSpans
+            .add(TextSpan(children: tmp, style: theme[node.className!]));
         stack.add(currentSpans);
         currentSpans = tmp;
 
@@ -97,15 +102,19 @@ class HighlightView extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        border: border, 
+        border: border,
         borderRadius: borderRadius,
-        color: theme[_rootKey]?.backgroundColor ?? _defaultBackgroundColor,
+        color: backgroundColor ??
+            theme[_rootKey]?.backgroundColor ??
+            _defaultBackgroundColor,
       ),
       padding: padding,
       child: RichText(
         text: TextSpan(
           style: _textStyle,
-          children: _convert(highlight.parse(source, language: language).nodes!),
+          children: _convert(
+            highlight.parse(source, language: language).nodes!,
+          ),
         ),
       ),
     );
