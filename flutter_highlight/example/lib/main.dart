@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:flutter_highlight/theme_map.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'example_map.dart';
 
 void main() => runApp(MyApp());
@@ -56,12 +56,10 @@ class _MyHomePageState extends State<MyHomePage> {
               }).toList();
             },
             onSelected: (selected) {
-              if (selected != null) {
-                setState(() {
-                  language = selected;
-                });
-              }
-            },
+              setState(() {
+                language = selected;
+              });
+                        },
           ),
           PopupMenuButton<String>(
             child: _buildMenuContent(theme),
@@ -75,18 +73,16 @@ class _MyHomePageState extends State<MyHomePage> {
               }).toList();
             },
             onSelected: (selected) {
-              if (selected != null) {
-                setState(() {
-                  theme = selected;
-                });
-              }
-            },
+              setState(() {
+                theme = selected;
+              });
+                        },
           ),
           IconButton(
             icon: const Icon(Icons.code),
             tooltip: 'Source Code',
             onPressed: () {
-              launch('https://github.com/pd4d10/highlight');
+              launchUrlString('https://github.com/pd4d10/highlight');
             },
           )
         ],
@@ -96,9 +92,9 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             HighlightView(
-              exampleMap[language],
+              exampleMap[language]!,
               language: language,
-              theme: themeMap[theme],
+              theme: themeMap[theme]!,
               padding: EdgeInsets.all(12),
               textStyle: TextStyle(
                   fontFamily:
